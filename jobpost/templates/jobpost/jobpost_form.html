@@ -1,0 +1,15 @@
+{% extends 'jobpost/main.html' %}
+
+{% block content %}
+<div class="header-bar">
+    <a href="{% url 'Jobposts' %}">&#8592; Go back</a>
+</div>
+<div class="card-body">
+    <form method="post" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input class="button" type="submit" value="submit"/>
+    </form>
+</div>
+
+{% endblock content %}
