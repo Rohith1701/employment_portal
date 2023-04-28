@@ -6,14 +6,15 @@ from .models import Job
 class EmployeeInline(admin.TabularInline):
     model = EmployeeJobMap
 
+
 class JobAdmin(admin.ModelAdmin):
     exclude = ('creater',)
-    list_display = ('position_name','creater',)
-    inlines =(EmployeeInline,)
+    list_display = ('position_name', 'creater',)
+    inlines = (EmployeeInline, )
 
     def get_queryset(self, request):
         if request.user.is_superuser:
-            return(Job.objects.all())
+            return (Job.objects.all())
         else:
             return Job.objects.filter(creater=request.user)
 
@@ -23,8 +24,8 @@ class JobAdmin(admin.ModelAdmin):
         else:
             return ('position_name',)
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj):
         obj.creater =request.user
         obj.save()
-       
-admin.site.register(Job ,JobAdmin )
+
+admin.site.register(Job, JobAdmin)

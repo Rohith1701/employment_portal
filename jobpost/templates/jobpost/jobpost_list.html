@@ -19,14 +19,14 @@
         <input type="text" name='search-area' value="{{search_input}}" />
         <input style="margin-left: 10px;" class="button" type="submit" value='Search' />
     </form>
-    <a id="add-link" href="{% url 'Job-create'%}">&#x2b;</a>
+    <a id="add-link" href="{% url 'job-create'%}">&#x2b;</a>
 
 </div>
 
 <div class="job-items-wrapper">
     {% for JobPost in Jobposts %}
     <div class="job-wrapper">
-        {% if Jobpost.complete %}
+        {% if JobPost.complete %}
         <div class="job-title">
             <div class="job-complete-icon"></div>
             <i><s><a href="{% url 'Job-update' job.id %}">{{JobPost}}</a></s></i>
