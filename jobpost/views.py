@@ -1,4 +1,4 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +9,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import JobPost
 from django.views.generic.edit import (
     CreateView, UpdateView, DeleteView, FormView)
+
+from django.views import View
+from django.http import HttpResponse
 
 
 class JobPostView(ListView):
@@ -47,7 +50,7 @@ class JobList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['Jobposts'] = context['Jobposts'].filter(
             user=self.request.user)
-        print(dir(context['Jobposts']))
+        print(context['Jobposts'])
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['Jobposts'] = context['Jobposts'].filter(
@@ -66,7 +69,7 @@ class JobCreate(LoginRequiredMixin, CreateView):
 
     model = JobPost
     fields = ['jobname', 'companyname', 'email', 'mobile', 'city', 'salery', ]
-    success_url = reverse_lazy('Jobposts')
+    success_url = reverse_lazy('Jobview')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -76,11 +79,27 @@ class JobCreate(LoginRequiredMixin, CreateView):
 class JobUpdate(LoginRequiredMixin, UpdateView):
     model = JobPost
     fields = ['jobname', 'companyname', 'email', 'mobile', 'city', 'salery',]
-    success_url = reverse_lazy('Jobposts')
+    success_url = reverse_lazy('Jobview')
 
 
 class JobDelete(LoginRequiredMixin, DeleteView):
     model = JobPost
     context_object_name = 'JobPost'
-    success_url = reverse_lazy('Jobposts')
+    success_url = reverse_lazy('Jobview')
     template_name = "jobpost/jobpost_delete.html"
+
+
+class JobDec(View):
+    model = JobPost
+    template_name = 'jobpost/demo.html'
+
+    def get(self, request):
+        context = {
+            'data': {
+                'Name': 'Rohith',
+                'City': 'Bangalore',
+                'Age': 22,
+                'Height':183
+                }
+         }
+        return render( request, 'jobpost/demo.html', context=context)

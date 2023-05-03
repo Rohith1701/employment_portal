@@ -29,15 +29,16 @@
         {% if JobPost.complete %}
         <div class="job-title">
             <div class="job-complete-icon"></div>
-            <i><s><a href="{% url 'Job-update' job.id %}">{{JobPost}}</a></s></i>
+
+            <i><s><a href="{% url 'jobupdate' job.id %}">{{ JobPost }}</a></s></i>
         </div>
-        <a class="delete-link" href="{% url 'Job-delete' job.id %}">&#215;</a>
+        <a class="delete-link" href="{% url 'jobdelete' job.id %}">&#215;</a>
         {% else %}
         <div class="job-title">
             <div class="job-incomplete-icon"></div>
-            <a href="{% url 'Job-update' job.id %}">{{JobPost}}</a>
+            <a href="{% url 'jobupdate' job.id %}">{{ JobPost }}</a>
         </div>
-        <a class="delete-link" href="{% url 'Job-delete' job.id %}">&#215;</a>
+        <a class="delete-link" href="{% url 'jobdelete' job.id %}">&#215;</a>
         {% endif %}
     </div>
     {% empty %}

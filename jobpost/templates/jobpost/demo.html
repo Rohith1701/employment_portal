@@ -1,0 +1,12 @@
+{% extends 'jobpost/main.html' %}
+
+{% block content %}
+
+<div >
+            {% for key, value in data.items %}
+            {{ key }}: {{ value }}    
+            <br/>
+            {% endfor %}    
+</div>
+
+{% endblock content %}
