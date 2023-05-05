@@ -12,6 +12,8 @@ from django.views.generic.edit import (
 
 from django.views import View
 from django.http import HttpResponse
+from .models import InputForm1
+from .forms import InputForm
 
 
 class JobPostView(ListView):
@@ -90,16 +92,25 @@ class JobDelete(LoginRequiredMixin, DeleteView):
 
 
 class JobDec(View):
-    model = JobPost
-    template_name = 'jobpost/demo.html'
 
-    def get(self, request):
-        context = {
-            'data': {
-                'Name': 'Rohith',
-                'City': 'Bangalore',
-                'Age': 22,
-                'Height':183
-                }
-         }
-        return render( request, 'jobpost/demo.html', context=context)
+    def get(self,request):
+        context ={}
+        context['form']= InputForm()
+        return render(request, "jobpost/demo.html", context)
+    
+    def post(self,request):
+        form = InputForm(data=request.POST)
+        if form.is_valid():
+            data ={
+                "first_name1": form.first_name,
+                "last_name1": form.last_name,
+                "roll_number1":form.roll_number,
+                "password1":form.password
+            }
+            obj = InputForm1(data)
+            obj.save()
+            return render()
+
+
+
+    

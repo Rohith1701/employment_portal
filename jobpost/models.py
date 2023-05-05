@@ -13,3 +13,14 @@ class JobPost(models.Model):
 
     def __str__(self):
         return self.jobname
+
+ 
+class InputForm1(models.Model):
+ 
+    first_name1 = models.CharField(max_length = 200)
+    last_name1 = models.CharField(max_length = 200)
+    roll_number1 = models.IntegerField(help_text = "Enter 6 digit roll number")
+    password1 = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.first_name
